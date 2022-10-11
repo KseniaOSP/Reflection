@@ -13,24 +13,24 @@ foreach (MemberInfo member in typeCalc.GetMembers())
 }
 
 // Инстанцируем экземпляр класса (у типа класса находим
-// конструктор без параметров, и вызываем его передавая ноль
+// конструктор без параметров, и вызываем его, передавая ноль
 // аргументов) 
 ConstructorInfo constr = typeCalc.GetConstructor(new Type[0]);
 object calc = constr.Invoke(new Object[0]);
 
 // Получаем информацию о полях класса (указываем, что нам нужно nonpublic instance поле) 
-FieldInfo leftField = typeCalc.GetField("Left", BindingFlags.NonPublic | BindingFlags.Instance);
-FieldInfo rightField = typeCalc.GetField("Right", BindingFlags.NonPublic | BindingFlags.Instance);
+FieldInfo leftField = typeCalc.GetField("left", BindingFlags.NonPublic | BindingFlags.Instance);
+FieldInfo rightField = typeCalc.GetField("right", BindingFlags.NonPublic | BindingFlags.Instance);
 
-// Присваиваем полям значения
-leftField.SetValue(calc, 38);
-rightField.SetValue(calc, 34);
+// Получаем значение полей
+var value1 = leftField.GetValue(calc);
+var value2 = rightField.GetValue(calc);
 
 // Получаем информацию о методе класса
-MethodInfo methodInfo = typeCalc.GetMethod("Subtract");
+MethodInfo methodInfo = typeCalc.GetMethod(nameof(Calc.Subtract));
 
 // Вызываем метод
-object result = methodInfo.Invoke(calc, new object[] {38,34});
+object result = methodInfo.Invoke(calc, new object[] {value1, value2});
 
 // Выводим значение
 Console.WriteLine(result);

@@ -9,8 +9,8 @@ namespace Reflection
 {
     public class Calc
     {
-        private int Left;
-        private int Right;
+        private int left;
+        private int right;
 
         public int Subtract(int Left, int Right)
         {
